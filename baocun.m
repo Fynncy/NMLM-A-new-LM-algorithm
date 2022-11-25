@@ -1,0 +1,123 @@
+clc;
+clear;
+close all;
+
+% 多参数化位置、采样间距、信噪比、方法
+% pos = [[0,0, -3],[0,0,-2]];
+
+% 1	[0,0,-5]
+% 2	[0,0,-3]
+% 3	[0,0,-2]
+% 4	[0,0,-1]
+% 5	[1,1,-2]
+% 6	[0,-1,-3]
+% 7	[-1,1,-3]
+% 8	[-1,-1,-3]
+% 9	[1,0,-2]
+% 10	[-2,1,-2]
+% 11	[-2, 1, -3]
+% 12	[-2, -1, -3]
+% 13	[2, 0, -2]
+% 14	[1, 1, -3]
+
+% 1  0, 0, -5; 
+% 2  0, 0, -3; 
+% 3  0, 0, -2; 
+% 4  0, 0, -1; 
+% 5  1, 1, -2; 
+% 6  0, -1, -3; 
+% 7  -1, 1, -3;
+% 8  -1, -1, -3; 
+% 9  1, 0, -2; 
+% 10  -2, 1, -2; 
+% 11  -2, 1, -3; 
+% 12  -2, -1, -3; 
+% 13  -2, 2, -3; 
+% 14  1, 1, -3
+
+% 二次调试
+% pos=[0, 0, -5; 0, 0, -3; 0, 0, -2; 0, 0, -1; 1, 1, -2; 0, -1, -3; -1, 1, -3;
+%      -1, -1, -3; 1, 0, -2; -2, 1, -2; -2, 1, -3; -2, -1, -3; -2, 2, -3; 1, 1, -3];
+% pos=[0, 0, -5; 0, 0, -3; 0, 0, -2; 0, 0, -1; 1, 1, -5; 0, -1, -5; -1, 1, -3;
+%      -1, -1, -5; 1, 0, -4; -2, 1, -4; -2, 1, -5; -2, -1, -3; -2, 2, -5; 1, 1, -3];
+pos=[0, 0, -5; 1, 0, -5; 0, 0, -4; 0, 0, -6; 1, 1, -5; 0, -1, -5; -1, 1, -4;
+     -1, -1, -5; 1, 0, -6; -2, 1, -4; -2, 1, -5; -2, -1, -4; -2, 2, -5; 1, 1, -4];
+detection_num = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+% detection_num = [1 2 3 6 7 11 12 13 14]; 
+pos_special = pos(detection_num,:); 
+SNR = [10, 20, 30, 40, 50, 100];
+space = [0.1, 0.3, 0.5, 0.7, 0.9];
+method_id = [0, 1, 2, 4, 5, 6, 7];
+for i = 1:length(pos_special)
+    detection = sprintf('%s%d%s','第',detection_num(i),'组');
+%     for j= 1:200
+%         test_duoweizhi_csv(pos_special(i,:), 0.3, 30, 7, j, detection);
+%     end
+    for j = 1:length(space)
+        for k = 1:length(SNR)
+            for m = 1:length(method_id)
+                test_duoweizhi_csv(pos_special(i,:), space(j), SNR(k), method_id(m), 0, detection);
+            end
+        end
+    end
+end
+
+% 测试位置test
+pos=[0, 0, -5; 1, 0, -5; 0, 0, -4; 0, 0, -6; 1, 1, -5; 0, -1, -5; -1, 1, -4;
+     -1, -1, -5; 1, 0, -6; -2, 1, -4; -2, 1, -5; -2, -1, -4; -2, 2, -5; 1, 1, -4];
+% method_id = [0, 1, 2, 4, 5, 6, 7];
+% method_id = [0,7];
+% for i = 1:length(pos)
+%     for m = 1:length(method_id)
+%         test_duoweizhi_csv(pos(i,:), 0.5, 30, method_id(m), 0, '');
+%     end
+% end
+
+% detection = '第12组';
+% for j= 1:200
+%     test_duoweizhi_csv([-1, -1, -3], 0.1, 30, 7, j, detection);
+% end
+
+% pos=[0, 0, -5; 0, 0, -3; 0, 0, -2; 0, 0, -1; 1, 1, -2; 0, -1, -3; -1, 1, -3;
+%      -1, -1, -3; 1, 0, -2; -2, 1, -2; -2, 1, -3; -2, -1, -3; -2, 2, -3; 1, 1, -3];
+% space = [0.1, 0.2, 0.3];
+space = [0.1, 0.3, 0.5, 0.7, 0.9];
+% space = 0.1;
+% % SNR = 30;
+SNR = [10, 20, 30, 40, 50, 100];
+method_id = [0, 1, 2, 4, 5, 6, 7];
+% for i = 1:length(pos)
+%     for j = 1:length(space)
+%         for k = 1:length(SNR)
+%             for m = 1:length(method_id)
+%                 test_duoweizhi_csv(pos(i,:), space(j), SNR(k), method_id(m));
+%             end
+%         end
+%     end
+% end
+% for i = 1:length(pos)
+%     for j = 1:length(space)               
+%         test_duoweizhi_csv(pos(i,:), space(j), 30, 0);
+%     end
+% end
+% for m = 1:length(method_id)
+%     test_duoweizhi_csv([1, 0, -2], 0.5, 50, method_id(m));
+% end
+
+% test_duoweizhi_csv([2, 0, -2], 0.1, 30, 7);
+disp('finish');
+% 
+% m = pos(1,:);
+% a  = ndims(pos);
+% disp(a)
+
+% for i = 1:1:2
+%     b = pos(i,:);
+%     disp(b)
+% end
+
+% position=[0 0 -1; 1 2 -3];
+% % fprintf(position)
+% disp(position)
+% for :
+%     test_duoweizhi_csv()
